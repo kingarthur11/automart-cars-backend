@@ -23,12 +23,6 @@ const verifyToken = {
   },
 };
 
-// const setcookie = async (req, res, next) => {
-//   const tokens = await tokenService.generateAuthTokens(user);
-//   res.cookie('userToken', token, { maxAge: 900000, httpOnly: true });
-// }
-
 module.exports = {
   verifyToken,
-  // setcookie
 };

@@ -1,5 +1,4 @@
 const httpStatus = require("http-status");
-const ApiError = require("../utils/ApiError");
 const catchAsync = require("../utils/catchAsync");
 const { carService, upload } = require("../services");
 const dotenv = require("dotenv");
@@ -16,7 +15,6 @@ const createCar = catchAsync(async (req, res) => {
   const car = await carService.creat_car(req.body);
   res.status(httpStatus.CREATED).json({ message: "Created successfully", car });
 });
-
 
 const getAllCar = catchAsync(async (req, res) => {
   const car = await carService.get_all_car();
