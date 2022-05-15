@@ -3,7 +3,6 @@ const ApiError = require("../utils/ApiError");
 const catchAsync = require("../utils/catchAsync");
 const { carService, upload } = require("../services");
 const dotenv = require("dotenv");
-const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 dotenv.config();
 
@@ -44,7 +43,6 @@ const uploadCarImage = catchAsync(async (req, res) => {
         if (err) return res.send(err);
         console.log(image.url);
         await carService.updatecar_image(req.params.car_img_id, image.url);
-        // fs.unlinkSync(path);
         res.json(image);
       }
     );
