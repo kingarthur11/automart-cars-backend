@@ -1,9 +1,8 @@
 const httpStatus = require("http-status");
 const ApiError = require("../utils/ApiError");
 const catchAsync = require("../utils/catchAsync");
-const { carService } = require("../services");
+const { carService, upload } = require("../services");
 const dotenv = require("dotenv");
-const { upload } = require("../middleware/uploadImage");
 const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 dotenv.config();
@@ -19,6 +18,14 @@ const createCar = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).json({ message: "Created successfully", car });
 });
 
+
+const getAllCar = catchAsync(async (req, res) => {
+  const car = await carService.get_all_car();
+  res.send(car);
+});
+
+
 module.exports = {
   createCar,
+  getAllCar
 };

@@ -8,6 +8,12 @@ const creatcar = async (carBody) => {
 };
 
 
+const get_all_car = async () => {
+  return Car.find({});
+};
+
+
 module.exports = {
     creatcar,
+    get_all_car
 };
