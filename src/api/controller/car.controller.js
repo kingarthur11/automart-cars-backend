@@ -14,7 +14,7 @@ cloudinary.config({
 });
 
 const createCar = catchAsync(async (req, res) => {
-  const car = await carService.creatcar(req.body);
+  const car = await carService.creat_car(req.body);
   res.status(httpStatus.CREATED).json({ message: "Created successfully", car });
 });
 
@@ -24,8 +24,36 @@ const getAllCar = catchAsync(async (req, res) => {
   res.send(car);
 });
 
+const deleteCar = catchAsync(async (req, res) => {
+  await carService.delete_car(req.params.car_id);
+  res.json({ message: "Deleted successfully" });
+});
+
+const uploadCarImage = catchAsync(async (req, res) => {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.send(err);
+    }
+    console.log(req.file);
+    const path = req.file.path;
+    const uniqueFilename = new Date().toISOString();
+    cloudinary.uploader.upload(
+      path,
+      { public_id: `blog/${uniqueFilename}`, tags: `blog` },
+      async function (err, image) {
+        if (err) return res.send(err);
+        console.log(image.url);
+        await carService.updatecar_image(req.params.car_img_id, image.url);
+        // fs.unlinkSync(path);
+        res.json(image);
+      }
+    );
+  });
+});
 
 module.exports = {
   createCar,
-  getAllCar
+  getAllCar,
+  uploadCarImage,
+  deleteCar
 };
